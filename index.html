@@ -1,0 +1,584 @@
+<!doctype html>
+<html class="is-smooth-scroll-compatible is-loading" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeanbaptistegroup — Creative Production</title>
+  <meta name="description" content="Stockholm-based production company specializing in live performance and visual concepts." />
+  <link rel='stylesheet' href='wp-content/themes/paisana/theme/public/assets/css/main.css' type='text/css' media='all' />
+  <style>
+    /* ── Overrides ── */
+    :root { --color-bg: #0c0c0c; }
+
+    .nav-logo a { display: flex; align-items: center; }
+    .nav-logo img { height: 22px; width: auto; filter: brightness(0) invert(1); }
+
+    .nav-logo { visibility: hidden; }
+    .nav-logo-text {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      text-transform: uppercase;
+      display: inline-block;
+      line-height: 1;
+      position: fixed;
+      z-index: 200;
+      visibility: visible;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    /* Center nav links absolutely within the nav */
+    .nav { position: relative; }
+    .nav-menu_1 {
+      position: absolute !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      display: flex !important;
+      white-space: nowrap;
+    }
+    .nav-menu_1 a { white-space: nowrap; }
+    .nav-menu_1 { gap: 2rem; }
+
+    /* Hero background video */
+    .hero-bg_anim { background: #0c0c0c; position: relative; overflow: hidden; }
+    .hero-bg_anim img { display: none; }
+    .hero-bg_anim iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 177.78vh; /* 16:9 */
+      height: 100%;
+      min-width: 100%;
+      min-height: 56.25vw; /* 16:9 */
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none;
+    }
+
+    /* Work image placeholders */
+    .work-image { background: #e0e0e0; display: flex !important; align-items: center !important; justify-content: center !important; aspect-ratio: 16/9; overflow: hidden; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(0,0,0,0.3); }
+    .work-image img,
+    .work-image video { display: none; }
+
+/* About section */
+    .about-section {
+      background: #0f1010 !important;
+      padding: 4vw 5vw;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .about-section * { color: #fff !important; }
+    .about-section_header h4 {
+      font-size: 1rem !important;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 1;
+      color: #fff !important;
+      margin-bottom: 4rem;
+      text-align: center;
+    }
+    .about-section_content {
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      gap: 1.5rem;
+    }
+    .about-section_content p {
+      font-size: 0.95rem !important;
+      line-height: 1.7;
+      opacity: 0.7;
+    }
+    .about-section_content .about-section_intro {
+      font-size: 2.2rem !important;
+      font-weight: 700 !important;
+      opacity: 1 !important;
+      line-height: 1.3 !important;
+    }
+    .about-section_location {
+      margin-top: 2rem;
+      opacity: 0.4;
+      font-size: 0.85rem !important;
+    }
+
+    /* Team marquee */
+    .team-marquee {
+      margin-top: 5rem;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .team-marquee::before,
+    .team-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 8rem;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .team-marquee::before { left: 0; background: linear-gradient(to right, #0f1010, transparent); }
+    .team-marquee::after  { right: 0; background: linear-gradient(to left, #0f1010, transparent); }
+
+    .team-marquee_track {
+      display: flex;
+      gap: 1.5rem;
+      animation: marquee-scroll 30s linear infinite;
+      width: max-content;
+    }
+    .team-marquee_track:hover { animation-play-state: paused; }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .team-card {
+      flex-shrink: 0;
+      width: 220px;
+    }
+    .team-card_img {
+      width: 220px;
+      height: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #1a1a1a;
+      position: relative;
+    }
+    .team-card_img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(1);
+      transition: filter 0.3s ease;
+    }
+    .team-card_img:hover img { filter: grayscale(0); }
+    .team-card_info {
+      padding: 0.75rem 0.25rem;
+    }
+    .team-card_info h3 {
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      color: #fff !important;
+      margin: 0 0 0.2rem !important;
+    }
+    .team-card_info p {
+      font-size: 0.8rem !important;
+      color: rgba(255,255,255,0.45) !important;
+      margin: 0 !important;
+      opacity: 1 !important;
+    }
+
+    .statement-services-title { font-weight: 700 !important; color: #fff !important; }
+    .services-list { list-style: none; padding: 0; margin: 0; }
+    .services-list li { color: #fff; font-size: calc(20px + 2.6vw); font-weight: 500; line-height: 100%; transition: color 0.25s ease; cursor: default; }
+    .services-list li:hover { color: rgba(255,255,255,0.35); }
+    .statement-info h4 small { color: #fff !important; }
+
+    /* Footer menu */
+    .footer-menu { flex-direction: row; justify-content: space-between; width: 100%; gap: 4rem; }
+    .footer-menu a, .footer-menu a span { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; }
+
+    /* Footer talk centered */
+    @keyframes strobe {
+      0%    { filter: invert(0); }
+      5%    { filter: invert(1); }
+      8%    { filter: invert(0); }
+      10%   { filter: invert(1); }
+      12%   { filter: invert(0); }
+      45%   { filter: invert(0); }
+      47%   { filter: invert(1); }
+      49%   { filter: invert(0); }
+      72%   { filter: invert(0); }
+      74%   { filter: invert(1); }
+      75%   { filter: invert(0); }
+      77%   { filter: invert(1); }
+      79%   { filter: invert(0); }
+      100%  { filter: invert(0); }
+    }
+    .footer { display: flex !important; flex-direction: column !important; justify-content: center !important; background: #fff !important; animation: strobe 5s steps(1) infinite; }
+    .footer-talk { flex: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+    .footer * { color: #111 !important; }
+    .footer-social > span:last-child { opacity: 1 !important; }
+    .footer-social > span a { color: #111 !important; }
+
+    /* Footer social */
+    .footer-bottom { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 2rem; }
+    .footer-menu { width: 100% !important; }
+    .footer-social {
+      display: flex !important; flex-direction: column !important;
+      align-items: center !important; justify-content: center !important;
+      text-align: center !important; width: 100% !important;
+    }
+    .footer-social > span { text-align: center !important; display: block !important; }
+    .footer-social > span:last-child { opacity: 1 !important; }
+    .footer-social > span a { display: inline !important; color: #ffffff !important; opacity: 1 !important; }
+
+    .works .works-wrapper .work { margin-bottom: 2px; }
+    .works .works-wrapper { padding-bottom: 30px; }
+
+    #services { scroll-margin-top: 80px; }
+    .statement { display: flex !important; justify-content: center !important; align-items: center !important; }
+    .statement-info { text-align: center !important; width: 100% !important; display: flex !important; justify-content: center !important; }
+    .statement-info > div { text-align: center; max-width: 800px; }
+  </style>
+</head>
+
+<body class="home blog wp-theme-paisana">
+  <div data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="ballena">
+
+      <!-- HEADER -->
+      <div class="header header-size alt">
+        <nav role="navigation" class="nav nav-size">
+          <div class="nav-logo">
+            <a href="/" style="text-decoration:none;">
+              <span class="nav-logo-text">Jeanbaptistegroup</span>
+            </a>
+          </div>
+
+          <div class="nav-menu">
+            <span class="nav-menu_icon">MENU</span>
+            <div class="nav-menu_1">
+              <a href="#works"><span>Work</span></a>
+              <a href="#about"><span>About</span></a>
+              <a href="#services"><span>Our services</span></a>
+              <a href="#contact" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); return false;"><span>Contact</span></a>
+            </div>
+            <div class="nav-menu_3">
+              <a href="mailto:hello@jeanbaptistegroup.com" target="_blank"><span>Get in touch</span></a>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+          <div class="hero-animate">
+            <div class="hero-wrapper">
+
+<div class="hero-copy">
+                <div class="hero-copy_top">
+                  <h2 class="Split">
+                    Stockholm-based production company specializing in live performance and visual concepts.
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="hero-bg">
+              <div class="hero-bg_anim">
+                <iframe src="https://player.vimeo.com/video/1164637411?background=1&autoplay=1&loop=1&muted=1#t=5" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="hero-cover"></div>
+          </div>
+        </div>
+
+        <main class="main">
+
+          <!-- WORKS -->
+          <div id="works" class="works">
+            <div class="works-header">
+              <div class="works-header_title">
+                <h4>Selected works</h4>
+              </div>
+            </div>
+
+            <div class="works-wrapper">
+              <div class="works-wrapper_content">
+
+                <div class="work">
+                  <a href="#" class="work-image" style="background:#111; display:block; aspect-ratio:16/9; overflow:hidden;">
+                    <img src="Dara_Bulgaria_Sarah_Louise_Bennett_EBU-e1779102978568.jpg" alt="BANGARANGA by DARA" style="width:100%; height:100%; object-fit:cover; display:block;">
+                  </a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Bangaranga — ESC 2026</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Creative Direction</li>
+                      <li>Choreography</li>
+                      <li>Live</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="work">
+                  <a href="#" class="work-image" style="background:#111; display:block; aspect-ratio:16/9; overflow:hidden;">
+                    <img src="work2.png" alt="Show — Melodifestivalen" style="width:100%; height:100%; object-fit:cover; display:block;">
+                  </a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Darin — Ullevi 2026</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Show Direction</li>
+                      <li>Koreografi</li>
+                      <li>Live</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="work">
+                  <a href="#" class="work-image">Content</a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Campaign — H&M Studios</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Creative Direction</li>
+                      <li>Art Direction</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="work">
+                  <a href="#" class="work-image">Content</a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Tour — International Artist</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Choreography</li>
+                      <li>Creative Direction</li>
+                      <li>Live</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="work">
+                  <a href="#" class="work-image">Content</a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Live Show — Eurovision</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Creative Direction</li>
+                      <li>Show</li>
+                      <li>Koreografi</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="work">
+                  <a href="#" class="work-image">Content</a>
+                  <div class="work-info">
+                    <div class="work-info_client">
+                      <h3><a href="#">Concept — Visual Identity</a></h3>
+                    </div>
+                    <ul class="work-info_area">
+                      <li>Art Direction</li>
+                      <li>Visual Concepts</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ABOUT -->
+          <div id="about" class="about-section" style="position:relative; overflow:hidden;">
+            <img src="logga-vit.png" alt="" aria-hidden="true" style="position:absolute; top:30%; left:50%; transform:translate(-50%,-50%); width:160%; opacity:0.12; pointer-events:none; user-select:none;">
+            <div class="about-section_header">
+              <h4>About us</h4>
+            </div>
+            <div class="about-section_content">
+              <p class="about-section_intro">Jeanbaptistegroup is a Stockholm-based production company specializing in live production, choreography, creative direction and visual concepts.</p>
+              <p>Founded by creative director and choreographer Sascha Jean-Baptiste, the company has built a global reputation for creating visually iconic performances and large-scale productions for some of the world's biggest artists, television productions and live entertainment platforms.</p>
+            </div>
+
+            <h4 style="color:rgba(255,255,255,0.4); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:4rem; margin-bottom:1.5rem; text-align:center;">Our team</h4>
+
+            <div class="team-marquee">
+              <div class="team-marquee_track">
+                <div class="team-card"><div class="team-card_img"><img src="Sascha.png" alt="Sascha Jean-Baptiste"></div><div class="team-card_info"><h3>Sascha Jean-Baptiste</h3><p>Creative Director & Founder</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Milena.png" alt="Milena Jacuniak"></div><div class="team-card_info"><h3>Milena Jacuniak</h3><p>Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Keisha.png" alt="Keisha Von-Arnold"></div><div class="team-card_info"><h3>Keisha Von-Arnold</h3><p>Creative Director & Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Kim.png" alt="Kim Pastor"></div><div class="team-card_info"><h3>Kim Pastor</h3><p>Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Isabella.png" alt="Isabella Teame"></div><div class="team-card_info"><h3>Isabella Teame</h3><p>Project Manager</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Emilia.png" alt="Emilia Sandquist"></div><div class="team-card_info"><h3>Emilia Sandquist</h3><p>Producer</p></div></div>
+                <!-- Duplicate for seamless loop -->
+                <div class="team-card"><div class="team-card_img"><img src="Sascha.png" alt="Sascha Jean-Baptiste"></div><div class="team-card_info"><h3>Sascha Jean-Baptiste</h3><p>Creative Director & Founder</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Milena.png" alt="Milena Jacuniak"></div><div class="team-card_info"><h3>Milena Jacuniak</h3><p>Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Keisha.png" alt="Keisha Von-Arnold"></div><div class="team-card_info"><h3>Keisha Von-Arnold</h3><p>Creative Director & Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Kim.png" alt="Kim Pastor"></div><div class="team-card_info"><h3>Kim Pastor</h3><p>Choreographer</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Isabella.png" alt="Isabella Teame"></div><div class="team-card_info"><h3>Isabella Teame</h3><p>Project Manager</p></div></div>
+                <div class="team-card"><div class="team-card_img"><img src="Emilia.png" alt="Emilia Sandquist"></div><div class="team-card_info"><h3>Emilia Sandquist</h3><p>Producer</p></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATEMENT -->
+          <div id="services" class="statement">
+            <div class="statement-info">
+              <div>
+                <h4 class="statement-services-title">Our services</h4>
+                <ul class="services-list">
+                  <li>* Creative direction</li>
+                  <li>* Choreography</li>
+                  <li>* Producing</li>
+                  <li>* Visual concepts</li>
+                  <li>* Artistic direction</li>
+                  <li>* Coaching</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer id="contact" class="footer">
+
+          <div class="footer-talk">
+            <div class="footer-talk_wrapper">
+              <span>Let's talk</span>
+              <div class="footer-talk_copy">
+                <span class="footer-talk_msg">Click to copy</span>
+                <button class="copy" onclick="copyEmail()">hello@jeanbaptistegroup.com</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <div class="footer-menu">
+              <a href="#works"><span>Work</span></a>
+              <a href="#about"><span>About</span></a>
+              <a href="#services"><span>Our services</span></a>
+              <a href="#contact"><span>Contact</span></a>
+            </div>
+            <div class="footer-social">
+              <span>Follow us</span>
+              <span><a href="https://www.instagram.com/jeanbaptistegroup/" target="_blank" style="color:#111;">Instagram</a>, <a href="#" target="_blank" style="color:#111;">TikTok</a></span>
+            </div>
+            <div class="footer-bottom_services">
+              <span>Jeanbaptistegroup©2026</span>
+            </div>
+          </div>
+
+        </footer>
+
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div class="menu-mobile inner">
+        <div class="menu-mobile_close">CLOSE</div>
+        <div class="menu-mobile_wrapper">
+          <div class="menu-logo">
+            <img src="logo.png" alt="Jeanbaptistegroup" style="filter: brightness(0) invert(1); height:20px;" />
+          </div>
+          <div class="menu-mobile_info">
+            <nav>
+              <a href="#works" class="menu-works"><span>Work</span></a>
+              <a href="#about"><span>About</span></a>
+              <a href="#services"><span>Our services</span></a>
+              <a href="#contact"><span>Contact</span></a>
+            </nav>
+            <div class="menu-footer">
+              <div class="menu-footer_copy">
+                <span>Stockholm based</span>
+                <span>hello@jeanbaptistegroup.com</span>
+              </div>
+              <div class="menu-footer_social">
+                <a href="#" target="_blank">Instagram</a>
+                <a href="#" target="_blank">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var hash = this.getAttribute('href');
+        if (hash === '#') return;
+        var target = document.querySelector(hash);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('hello@jeanbaptistegroup.com');
+      const el = document.querySelector('.footer-talk_msg');
+      if (el) { el.textContent = 'Copied!'; setTimeout(() => el.textContent = 'Click to copy', 2000); }
+    }
+  </script>
+
+  <script src="https://assets.codepen.io/16327/gsap-latest-beta.min.js?cache=3.11.4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/CustomEase.min.js"></script>
+  <script src="https://assets.codepen.io/16327/ScrollTrigger.min.js?cache=3.11.4"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@latest/bundled/lenis.js"></script>
+  <script src="wp-content/themes/paisana/theme/public/assets/js/bundle.min.js"></script>
+
+  <script>
+    window.addEventListener('load', function () {
+      document.querySelectorAll('.footer-social a').forEach(function (a) {
+        a.style.setProperty('color', '#111111', 'important');
+        a.style.setProperty('opacity', '1', 'important');
+      });
+    });
+
+    (function () {
+      var el      = document.querySelector('.nav-logo-text');
+      var hero    = document.querySelector('.hero');
+      var heroCopy = document.querySelector('.hero-copy_top');
+
+      var startSize = 7;
+      var endSize   = 0.85;
+
+      // Nav end position
+      var endTop  = 30;  // px from top
+      var endLeft = 32;  // px from left
+
+      function update() {
+        if (!el || !hero) return;
+
+        var heroH   = hero.offsetHeight;
+        var scrollY = window.scrollY || window.pageYOffset;
+        var progress = Math.min(Math.max(scrollY / (heroH * 0.5), 0), 1);
+
+        var size = startSize + (endSize - startSize) * progress;
+        el.style.fontSize = size + 'rem'; // sätt storlek först så offsetWidth stämmer
+
+        // Start position: centrerad i hero
+        var startTop  = (window.innerHeight - el.offsetHeight) / 2;
+        var startLeft = (window.innerWidth  - el.offsetWidth)  / 2;
+
+        var top  = startTop  + (endTop  - startTop)  * progress;
+        var left = startLeft + (endLeft - startLeft) * progress;
+
+        el.style.top     = top  + 'px';
+        el.style.left    = left + 'px';
+        el.style.opacity = '1';
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    })();
+  </script>
+
+</div>
+</body>
+</html>
