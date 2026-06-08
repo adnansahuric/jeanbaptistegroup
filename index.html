@@ -46,7 +46,16 @@
     /* Hero background video */
     .hero-bg_anim { background: #ff0000; position: relative; overflow: hidden; }
     .hero-cover { display: none !important; }
-    .hero { background-color: #ff0000 !important; }
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero {
+      background: linear-gradient(135deg, #c0392b, #e8d5b0, #a93226, #f5e6c8, #c0392b) !important;
+      background-size: 400% 400% !important;
+      animation: gradientMove 8s ease infinite !important;
+    }
     .hero-bg_anim img { display: none; }
     .hero-bg_anim iframe {
       position: absolute;
