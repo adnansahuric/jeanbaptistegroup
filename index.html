@@ -289,6 +289,78 @@
       document.body.classList.add('locked');
     }
   </script>
+
+  <!-- ACCESS GATE -->
+  <div id="gate" style="display:none; position:fixed; inset:0; background:#000; z-index:999999; flex-direction:column; align-items:center; justify-content:center; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+    <img src="logga-vit.png" alt="Jeanbaptistegroup" style="width:120px; margin-bottom:48px; opacity:0.9;">
+    <p style="font-size:11px; letter-spacing:0.3em; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:32px;">Enter access code</p>
+    <div id="gate-inputs" style="display:flex; align-items:center; gap:12px;">
+      <div style="display:flex;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-right:none;border-radius:6px 0 0 6px;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-right:none;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-radius:0 6px 6px 0;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+      </div>
+      <span style="color:rgba(255,255,255,0.3);font-size:18px;">–</span>
+      <div style="display:flex;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-right:none;border-radius:6px 0 0 6px;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-right:none;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+        <input class="gate-input" maxlength="1" style="width:48px;height:56px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-radius:0 6px 6px 0;color:#fff;font-size:20px;text-align:center;outline:none;caret-color:transparent;">
+      </div>
+    </div>
+    <p id="gate-error" style="margin-top:24px;font-size:11px;letter-spacing:0.2em;color:#ef4444;text-transform:uppercase;opacity:0;">Wrong code</p>
+  </div>
+
+  <script>
+    (function() {
+      var SECRET = '123456';
+      var gate = document.getElementById('gate');
+      var inputs = Array.from(document.querySelectorAll('.gate-input'));
+      var errorEl = document.getElementById('gate-error');
+
+      if (sessionStorage.getItem('jbg_unlocked') !== '1') {
+        gate.style.display = 'flex';
+        setTimeout(function() { inputs[0].focus(); }, 100);
+      }
+
+      inputs.forEach(function(input, i) {
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !input.value && i > 0) {
+            inputs[i - 1].focus();
+            inputs[i - 1].value = '';
+          }
+        });
+        input.addEventListener('input', function() {
+          input.value = input.value.replace(/[^0-9]/g, '').slice(-1);
+          if (input.value && i < inputs.length - 1) inputs[i + 1].focus();
+          var code = inputs.map(function(x) { return x.value; }).join('');
+          if (code.length === 6) checkCode(code);
+        });
+      });
+
+      function checkCode(code) {
+        if (code === SECRET) {
+          sessionStorage.setItem('jbg_unlocked', '1');
+          gate.style.opacity = '0';
+          gate.style.transition = 'opacity 0.4s ease';
+          document.body.classList.remove('locked');
+          setTimeout(function() { gate.style.display = 'none'; }, 400);
+        } else {
+          errorEl.style.opacity = '1';
+          var wrap = document.getElementById('gate-inputs');
+          wrap.style.animation = 'none';
+          wrap.style.transform = 'translateX(-6px)';
+          setTimeout(function() { wrap.style.transform = 'translateX(6px)'; }, 80);
+          setTimeout(function() { wrap.style.transform = 'translateX(-4px)'; }, 160);
+          setTimeout(function() { wrap.style.transform = 'translateX(0)'; }, 240);
+          setTimeout(function() {
+            inputs.forEach(function(x) { x.value = ''; });
+            errorEl.style.opacity = '0';
+            inputs[0].focus();
+          }, 600);
+        }
+      }
+    })();
+  </script>
   <div data-barba="wrapper">
     <div data-barba="container" data-barba-namespace="ballena">
 
