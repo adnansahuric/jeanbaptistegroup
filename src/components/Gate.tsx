@@ -6,7 +6,7 @@ import {
   InputOTPSlot,
 } from "./ui/input-otp"
 
-const SECRET_CODE = "241124"
+const SECRET_CODE = "123456"
 const SESSION_KEY = "jbg_unlocked"
 
 interface GateProps {
