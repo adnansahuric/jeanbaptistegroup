@@ -231,6 +231,9 @@
     .services-list li:hover { color: rgba(255,255,255,0.35); }
     .statement-info h4 small { color: #fff !important; }
 
+    /* Gate lock */
+    body.locked [data-barba="wrapper"] { opacity: 0; pointer-events: none; }
+
     /* Footer menu */
     .footer-menu { flex-direction: row; justify-content: space-between; width: 100%; gap: 4rem; }
     .footer-menu a, .footer-menu a span { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; }
@@ -281,6 +284,11 @@
 </head>
 
 <body class="home blog wp-theme-paisana">
+  <script>
+    if (sessionStorage.getItem('jbg_unlocked') !== '1') {
+      document.body.classList.add('locked');
+    }
+  </script>
   <div data-barba="wrapper">
     <div data-barba="container" data-barba-namespace="ballena">
 

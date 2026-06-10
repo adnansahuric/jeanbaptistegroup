@@ -53,6 +53,7 @@ export default function Gate({ onUnlock }: GateProps) {
       if (value === SECRET_CODE) {
         sessionStorage.setItem(SESSION_KEY, "1")
         document.body.style.overflow = ''
+        document.body.classList.remove('locked')
         onUnlock()
       } else {
         setError(true)
